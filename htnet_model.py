@@ -66,6 +66,7 @@ def htnet(nb_classes, Chans = 64, Samples = 128,
                          'or Dropout, passed as a string.')
     
     input1   = Input(shape = (1, Chans, Samples))
+    print("input1: ", input1) # I get shape=(None, 1, 94, 501)
     if projectROIs:
         input2   = Input(shape = (1, ROIs, Chans))
 
@@ -73,7 +74,7 @@ def htnet(nb_classes, Chans = 64, Samples = 128,
     block1       = Conv2D(F1, (1, kernLength), padding = 'same',
                                    input_shape = (1, Chans, Samples),
                                    use_bias = False)(input1)
-    
+    print("block1: ", block1) # I get shape=(None, 1, 94, 20)
     if useHilbert:
         # Hilbert transform
         if compute_val == 'relative_power':

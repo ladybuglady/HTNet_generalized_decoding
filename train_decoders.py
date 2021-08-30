@@ -14,12 +14,13 @@ from transfer_learn_nn_eeg import transfer_learn_nn_eeg
 t_start = time.time()
 ##################USER-DEFINED PARAMETERS##################
 # Where data will be saved: rootpath + dataset + '/'
-rootpath = '.../'
+rootpath = '/data1/users/zeynep/'
 dataset = 'move_rest_ecog'
 
 # Data load paths
 ecog_lp = rootpath + 'ecog_dataset/' # data load path
 ecog_roi_proj_lp = ecog_lp+'proj_mat/' #
+
 
 ### Tailored decoder params (within participant) ###
 n_folds_tail = 3 # number of folds (per participant)
