@@ -47,6 +47,8 @@ def cnn_model(X_train, Y_train,X_validate, Y_validate,X_test,Y_test,chckpt_path,
                   dropoutType = dropoutType,kernLength_sep = kernLength_sep,
                   ROIs = nROIs,useHilbert=useHilbert,projectROIs=projectROIs,do_log=do_log,
                   compute_val=compute_val,data_srate=ecog_srate)
+    print("SHOULD PRINT MODEL SUMMARY")
+    model.summary()
     
     # Set up comiler, checkpointer, and early stopping during model fitting
     model.compile(loss=loss, optimizer=optimizer, metrics = ['accuracy'])
@@ -126,9 +128,11 @@ def run_nn_models(sp,n_folds,combined_sbjs,lp, roi_proj_loadpath,
                    'kernLength_sep':kernLength_sep, 'rand_seed':rand_seed, 'loss':loss, 'optimizer':optimizer,
                    'patience':patience, 'early_stop_monitor':early_stop_monitor, 'do_log':do_log, 'n_test':n_test,
                    'n_val':n_val,'n_train':n_train, 'epochs': epochs, 'compute_val':compute_val, 'ecog_srate':ecog_srate,'trim_n_chans':trim_n_chans}
+    '''
     f = open(sp+'param_file.pkl','wb')
     pickle.dump(params_dict,f)
     f.close()
+    '''
     
     # Set random seed
     np.random.seed(rand_seed)

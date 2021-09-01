@@ -100,19 +100,27 @@ def htnet(nb_classes, Chans = 64, Samples = 128,
                                    depth_multiplier = D,
                                    depthwise_constraint = max_norm(1.))(block1)
     else:
-        block1       = DepthwiseConv2D((Chans, 1), use_bias = False, 
+        # getting an error here as of August 30th 3:09pm
+        '''
+        ValueError: Negative dimension size caused by subtracting 94 from 1 for '{{node 
+        depthwise_conv2d/depthwise}} = DepthwiseConv2dNative[T=DT_FLOAT, data_format="NHWC", 
+        dilations=[1, 1, 1, 1], padding="VALID", strides=[1, 1, 1, 1]](batch_normalization/Identity, 
+        depthwise_conv2d/depthwise/ReadVariableOp)' with input shapes: [?,1,94,20], [94,1,20,2].
+
+        '''
+        block1       = DepthwiseConv2D((Chans, 1), use_bias = False, data_format = 'channels_first',
                                    depth_multiplier = D,
                                    depthwise_constraint = max_norm(1.))(block1)
     block1       = BatchNormalization(axis = 1)(block1)
     block1       = Activation('elu')(block1)
-    block1       = AveragePooling2D((1, 4))(block1)
+    block1       = AveragePooling2D((1, 4), data_format = 'channels_first')(block1)
     block1       = dropoutType(dropoutRate)(block1)
     
     block2       = SeparableConv2D(F2, (1, kernLength_sep),
                                    use_bias = False, padding = 'same')(block1)
     block2       = BatchNormalization(axis = 1)(block2)
     block2       = Activation('elu')(block2)
-    block2       = AveragePooling2D((1, 8))(block2)
+    block2       = AveragePooling2D((1, 8), data_format = 'channels_first')(block2)
     block2       = dropoutType(dropoutRate)(block2)
         
     flatten      = Flatten(name = 'flatten')(block2)
