@@ -94,6 +94,7 @@ for s,val in enumerate(spec_meas_tail):
                   D = hyps_tail['D'], F2 = hyps_tail['F2'], n_estimators = hyps_tail['n_estimators'], max_depth = hyps_tail['max_depth'])
 
 
+'''
 #### Same modality training ####
 for s,val in enumerate(spec_meas_same):
     do_log = True if val == 'power_log' else False
@@ -198,5 +199,5 @@ frac_combine_df(rootpath + dataset, ecog_roi_proj_lp)
 #### Pre-compute difference spectrograms for ECoG and EEG datasets ####
 diff_specs(rootpath + dataset  + '/combined_sbjs_power/', ecog_lp, ecog = True)
 diff_specs(rootpath + dataset  + '/combined_sbjs_power/', eeg_lp, ecog = False)
-    
+'''
 print('Elapsed time: '+str(time.time() - t_start))

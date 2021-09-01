@@ -71,10 +71,11 @@ def htnet(nb_classes, Chans = 64, Samples = 128,
         input2   = Input(shape = (1, ROIs, Chans))
 
     ##################################################################
+    # discrepancy happens here!
     block1       = Conv2D(F1, (1, kernLength), padding = 'same',
                                    input_shape = (1, Chans, Samples),
                                    use_bias = False)(input1)
-    print("block1: ", block1) # I get shape=(None, 1, 94, 20)
+    print("block1: ", block1) # I get shape=(None, 1, 94, 20), should be 
     if useHilbert:
         # Hilbert transform
         if compute_val == 'relative_power':
@@ -84,7 +85,14 @@ def htnet(nb_classes, Chans = 64, Samples = 128,
             # Subtract off baseline (at beginning of input data trials)
             X2 = AveragePooling2D((1, X1.shape[-1]//base_split))(X1) # average across all time points
             X2 = Lambda(lambda x: tf.tile(x[...,:1],tf.constant([1,1,1,Samples], dtype=tf.int32)))(X2)
-            block1 = Lambda(lambda inputs: inputs[0]-inputs[1])([X1, X2])
+            print("X1: ", X1) # shape=(None, 1, 94, 20)
+            print("X2: ", X2) # shape=(None, 1, 18, 501)
+            block1 = Lambda(lambda inputs: inputs[0]-inputs[1])([X1, X2]) # this is where the bug shows itself
+            '''
+            ValueError: Dimensions must be equal, but are 94 and 18 for '{{node lambda_2/sub}} = 
+            Sub[T=DT_FLOAT](lambda/Identity, lambda_1/Identity)' with input shapes: [?,1,94,20], [?,1,18,501].
+            '''
+            
         else:
             block1       = Lambda(apply_hilbert_tf, arguments={'do_log':do_log,'compute_val':compute_val,\
                                                                'data_srate':data_srate})(block1)
