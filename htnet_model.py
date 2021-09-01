@@ -72,7 +72,7 @@ def htnet(nb_classes, Chans = 64, Samples = 128,
 
     ##################################################################
     # discrepancy happens here!
-    block1       = Conv2D(F1, (1, kernLength), padding = 'same',
+    block1       = Conv2D(F1, (1, kernLength), padding = 'same', data_format = 'channels_first',
                                    input_shape = (1, Chans, Samples),
                                    use_bias = False)(input1)
     print("block1: ", block1) # I get shape=(None, 1, 94, 20), should be 
@@ -83,7 +83,7 @@ def htnet(nb_classes, Chans = 64, Samples = 128,
             X1 = Lambda(apply_hilbert_tf, arguments={'do_log':True,'compute_val':'power'})(block1) 
             
             # Subtract off baseline (at beginning of input data trials)
-            X2 = AveragePooling2D((1, X1.shape[-1]//base_split))(X1) # average across all time points
+            X2 = AveragePooling2D((1, X1.shape[-1]//base_split), data_format = 'channels_first')(X1) # average across all time points
             X2 = Lambda(lambda x: tf.tile(x[...,:1],tf.constant([1,1,1,Samples], dtype=tf.int32)))(X2)
             print("X1: ", X1) # shape=(None, 1, 94, 20)
             print("X2: ", X2) # shape=(None, 1, 18, 501)
