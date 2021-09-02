@@ -24,9 +24,10 @@ ecog_roi_proj_lp = ecog_lp+'proj_mat/' #
 
 ### Tailored decoder params (within participant) ###
 n_folds_tail = 3 # number of folds (per participant)
-#spec_meas_tail = ['power', 'power_log', 'relative_power', 'phase', 'freqslide']
+spec_meas_tail = ['power', 'power_log', 'relative_power', 'phase', 'freqslide']
 #spec_meas_tail = ['relative_power', 'phase', 'freqslide']
-spec_meas_tail = ['phase', 'freqslide']
+#spec_meas_tail = ['phase', 'freqslide']
+#spec_meas_tail = ['freqslide']
 hyps_tail = {'F1' : 20, 'dropoutRate' : 0.693, 'kernLength' : 64,
              'kernLength_sep' : 56, 'dropoutType' : 'SpatialDropout2D',
              'D' : 2, 'n_estimators' : 240, 'max_depth' : 9}
@@ -36,9 +37,10 @@ patience_tail = 30
 
 ### Same modality decoder params (across participants) ###
 n_folds_same = 36 # number of total folds
-#spec_meas_same = ['power', 'power_log', 'relative_power', 'phase', 'freqslide']
+spec_meas_same = ['power', 'power_log', 'relative_power', 'phase', 'freqslide']
 #spec_meas_same = ['relative_power', 'phase', 'freqslide']
-spec_meas_same = ['phase', 'freqslide']
+#spec_meas_same = ['phase', 'freqslide']
+#spec_meas_same = ['freqslide']
 hyps_same = {'F1' : 19, 'dropoutRate' : 0.342, 'kernLength' : 24,
              'kernLength_sep' : 88, 'dropoutType' : 'Dropout',
              'D' : 2, 'n_estimators' : 240, 'max_depth' : 6}

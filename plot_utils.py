@@ -61,7 +61,9 @@ def plot_model_accs(root_path, dataset, nb_classes=2, compare_models=True,
     conds2 = ['(D)','(E)','(F)']
     
     # Load variables from param file
-    file_pkl = open(root_path+dataset+'/combined_sbjs_power/param_file.pkl', 'rb')
+    
+    #file_pkl = open(root_path+dataset+'/combined_sbjs_power/param_file.pkl', 'rb')
+    file_pkl = open('/data1/users/stepeter/htnet_generalized_data/move_rest_ecog/combined_sbjs_power/param_file.pkl', 'rb')
     params_dict = pickle.load(file_pkl)
     file_pkl.close()
 
@@ -72,8 +74,9 @@ def plot_model_accs(root_path, dataset, nb_classes=2, compare_models=True,
     test_day = params_dict['test_day']
     n_test = params_dict['n_test']
     n_val = params_dict['n_val']
+    
     lp = [root_path+dataset+suffix_lp[:-1]+'_power/']
-
+    
     if compare_models:
         models_used = params_dict['models']
         lp *= len(models_used)
